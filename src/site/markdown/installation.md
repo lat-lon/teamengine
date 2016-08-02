@@ -1,12 +1,24 @@
 # Installation
 
-## Easy via a shell script
+## Quick install
 
+The `teamengine-virtualization` module enables the automatic creation of a fully provisioned server image 
+that can be run on a virtualization platform. Currently only VirtualBox is supported, but support for several 
+other dynamic infrastructure platforms will be added in the future. See the [Virtualization Guide](./virt-guide.html) 
+for instructions.
 
-This project provides scripts to build TEAM Engine and the tests for Unix like systems
-https://github.com/opengeospatial/teamengine-builder
+The [TEAM Engine Builder project](https://github.com/opengeospatial/teamengine-builder) provides another way 
+to build TEAM Engine and OGC test suites. Shell scripts for Windows and Unix-like systems are available. 
+Detailed instructions are provided in the tutorial.
 
-## Downloading and building
+## Download and build from source
+
+### Prerequisites
+
+- **Java 8**: Download the Java JDK (Java Development Kit) 8, from <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>.
+- **Apache Maven**: Download the latest release from <https://maven.apache.org/download.cgi>.
+- **Git**: Download the Git VCS (version 1.8 or newer) from <https://git-scm.com/download/>
+- **Apache Tomcat 7**: It has been tested with Tomcat 7.0; the latest release is available from <http://tomcat.apache.org/download-70.cgi>.
 
 ### Getting the Source Code 
 
@@ -17,21 +29,23 @@ as indicated below:
     git clone https://github.com/opengeospatial/teamengine.git
     git checkout ${project.version}
 
-[Apache Maven 3](http://maven.apache.org/) is required to build the teamengine 
-code base, which consists of the following modules:
+[Apache Maven](http://maven.apache.org/) 3.2.5 or later is required to build the teamengine 
+code base, which currently consists of the following modules:
 
--   **teamengine-core**: Main CTL script processor
--   **teamengine-resources**: Includes shared resources such as stylesheets
-    and schemas
--   **teamengine-spi**: Provides an extensibility framework and a REST-like
-    API for test execution
--   **teamengine-realm**: A custom Tomcat user realm
--   **teamengine-web**: A web application for executing test suites and
-    browsing test results
--   **teamengine-console**: A console application that provides a
-    command-line interface for executing test suites in Unix and Windows
-    environments.
+- **teamengine-core**: Main CTL script processor
+- **teamengine-resources**: Includes shared resources such as stylesheets
+  and schemas
+- **teamengine-spi**: Provides an extensibility framework and a REST-like
+  API for test execution
+- **teamengine-realm**: A custom Tomcat user realm
+- **teamengine-web**: A web application for executing test suites and
+  browsing test results
+- **teamengine-console**: A console application that provides a command-line interface 
+  for executing test suites in Unix and Windows environments.
+- **teamengine-virtualization**: Enables the automatic creation of virtualization 
+  images using [Packer](https://www.packer.io/).
 
+  
 ### Building with Maven
 
 Simply run `mvn package` in the root project directory to generate all
@@ -98,6 +112,7 @@ structure of the TE\_BASE directory is shown below.
       |-- config.xml    # main configuration file
       |-- resources/    # shared test suite resources
           |-- site      # site-specific HTML (welcome, title, etc.)
+          |-- lib       # libraries required by some test (e.g. TestNG tests)
       |-- scripts/      # CTL test scripts
       |-- work/         # teamengine work directory
       +-- users/
@@ -132,7 +147,7 @@ README](https://github.com/opengeospatial/ets-resources) for details.
 
 #### System requirements
 
--   Java runtime: Oracle JDK 7 - [latest JDK
+-   Java runtime: Oracle JDK 8 - [latest JDK
     release](http://www.oracle.com/technetwork/java/javase/downloads/)
 -   Servlet container: Apache Tomcat 7.0 - [latest Tomcat
     release](http://tomcat.apache.org/download-70.cgi)
@@ -177,6 +192,25 @@ hence the context path) has been changed from the default value
 * `/teamengine`: Home page for selecting and running CTL test suites
 * `/teamengine/rest/suites`: Presents a listing of available (TestNG) test suites, 
 with links to test suite documentation
+
+
+### Installations of tests in TEAM ENGINE
+
+There are various examples of tests that can be installed in TEAM Engine. For example.
+
+- [GML 3.2.1](https://github.com/opengeospatial/ets-gml32)
+- [WMS 1.3](https://github.com/opengeospatial/ets-wms13)
+
+Even though the first one uses TestNG and the second uses CTL, they both follow maven best practice conventions and are build and treated the same way when installing them in TEAM Engine. To download and install a test do the following steps:
+
+1. checkout the test repository: e.g. `git clone  https://github.com/opengeospatial/ets-gml32.git`
+2. go inside the project" `cd ets-gml32`
+3. checkout a specific version. e.g. for 1.23 `git checkout 1.123`
+4. build using maven `mvn clean install`
+5. check that the build is succesful. You should see a **BUILD SUCCESS** text in the terminal
+6. go to the target folder `cd target`
+7. unzip the archive file that ends with *ctl.zip* to $TE_BASE/scripts
+8. unzip the archive file that ends with *deps.zip* to $TE_BASE/resources/lib
 
 
 ### Customizing the welcome page

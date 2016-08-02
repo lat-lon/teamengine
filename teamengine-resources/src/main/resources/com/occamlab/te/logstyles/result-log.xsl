@@ -5,8 +5,15 @@
   xmlns:encoder="java:java.net.URLEncoder"
   xmlns:file="java:java.io.File"
   xmlns:ctl="http://www.occamlab.com/ctl"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
   exclude-result-prefixes="viewlog encoder file te ctl"
   version="2.0">
+
+  <xsl:function name="ctl:getFileURI">
+    <xsl:param name="path" as="xs:string"/>
+    <xsl:sequence select="file:toURI(file:new($path))"/>
+  </xsl:function>
+
   <xsl:template name="Client-Result">
     <xsl:param name="continue">-1</xsl:param>
     <xsl:param name="bestPractice">0</xsl:param>
@@ -16,9 +23,11 @@
     <xsl:param name="warning">4</xsl:param>
     <xsl:param name="inheritedFailure">5</xsl:param>
     <xsl:param name="fail">6</xsl:param>
+    <!-- collection() function accepts URI, not file system path -->
+    <xsl:variable name="logdir-uri" select="ctl:getFileURI($logdir)" />
     <xsl:variable name="coverage-results">
       <service-requests>
-        <xsl:for-each select="collection(concat($logdir,'/',$sessionDir,'?select=WMS-*.xml'))">
+        <xsl:for-each select="collection(concat($logdir-uri,'/',$sessionDir,'?select=WMS-*.xml'))">
           <xsl:copy-of select="doc(document-uri(.))"/>
         </xsl:for-each>
       </service-requests>
@@ -61,7 +70,7 @@
       }
 
       function getUser() {
-      var userName = '<xsl:value-of select="$logdir"/>';
+      var userName = '<xsl:value-of select="$logdir-uri"/>';
       return userName.split("users/")[1];
       }
     </script>   
@@ -72,12 +81,13 @@
                 var url = location.href;
                 var result_url = url.split("viewSessionLog");
                 var c_name_value = getUser();
+                c_name_value = c_name_value.replace(/\//g, '');
                 var c_sessionID_value = getSession();
                 var urlpath = "";
                 var success = "images/pass.png";
                 var error = "images/fail.png";
                 var warning = "images/warning.png";
-                urlpath = result_url[0] + "restResult/suiteResult?userID=" + c_name_value + "&sessionID=" + c_sessionID_value;
+                urlpath = result_url[0] + "rest/suiteResult?userID=" + c_name_value + "&sessionID=" + c_sessionID_value;
                 $.ajax({
                     type: "GET",
                     url: urlpath,

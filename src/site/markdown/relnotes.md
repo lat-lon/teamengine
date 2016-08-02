@@ -1,6 +1,44 @@
 Release Notes
 =============
 
+## 4.7.1 (2016-07-11)
+- [spi] Create earl:TestRequirement resources in EarlTestListener#onStart method
+- [spi] Add cite:TestRun resource to EARL results (summary of test results)
+- Update site docs (use Maven 3.2.5 or later)
+
+
+## 4.7 (2016-07-05)
+- [spi:#152] Initial implementation of listeners that generate test results using W3C EARL vocabulary 
+  (as application/rdf+xml)
+- [virtualization: #167] Create [Packer](https://www.packer.io/) template to generate server image 
+  for VirtualBox environment
+- [web] Add VirtualWebappLoader to context (TE_BASE/resources/lib/*.jar)
+- [core] Remove dependency on `xercesImpl-xsd11` (ets-kml2 now uses `xercesImpl-xsd11-shaded`)
+- [core, web] Merge [PR #163](https://github.com/opengeospatial/teamengine/pull/163) to fix 
+  [#158](https://github.com/opengeospatial/teamengine/issues/158): Merge security (XXE) fixes
+- [realm] [#150](https://github.com/opengeospatial/teamengine/issues/150): Use PBKDF2 function to 
+  generate password hashes
+- [web] Add context listener to check that stored user passwords are not in clear text (generate hash if so).
+- Update site documentation (Virtualization Guide)
+
+
+## 4.6 (2016-02-29)
+- [web] [#142](https://github.com/opengeospatial/teamengine/issues/142) - Simplify the user interface when creating a new session
+- [site] Updated documentation related to using Java 8, prerequisites and adding tests (ETS)
+
+
+## 4.5 (2016-02-03)
+- [resources] Merge [PR #145](https://github.com/opengeospatial/teamengine/pull/145): 
+  Update style sheet that displays WMS client test results
+- [core] Resolve [#138](https://github.com/opengeospatial/teamengine/issues/138): 
+  Add support for XML Schema 1.1
+- [spi] Resolve [#139](https://github.com/opengeospatial/teamengine/issues/139): 
+  Move supporting JAX-RS classes to WMS 1.3 client test suite
+- [spi] Resolve [#127](https://github.com/opengeospatial/teamengine/issues/127): 
+  Improve TestNG report (test descriptions)
+- Update site documentation (TestNG cookbook)
+
+
 ## 4.4 (2015-11-03)
 - [spi] Merge [PR #137](https://github.com/opengeospatial/teamengine/pull/137) to fix 
   [#136](https://github.com/opengeospatial/teamengine/issues/136): Exception error message 

@@ -24,18 +24,17 @@
       <excludes><exclude>*</exclude></excludes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/src/main/resources/site</directory>
+      <directory>${project.basedir}/src/assembly/site</directory>
       <outputDirectory>resources/site</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/src/main/resources/users</directory>
+      <directory>${project.basedir}/src/assembly/users</directory>
       <outputDirectory>users</outputDirectory>
     </fileSet>
   </fileSets>
   <files>
     <file>
       <source>${project.basedir}/src/assembly/README.txt</source>
-      <outputDirectory>/</outputDirectory>
     </file>
     <file>
       <source>${project.basedir}/src/assembly/index.html</source>
