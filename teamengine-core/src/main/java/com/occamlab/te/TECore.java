@@ -215,7 +215,7 @@ public class TECore implements Runnable {
   public static String Clause = "";
   public static String Purpose = "";
   public static ArrayList<String> rootTestName = new ArrayList<String>();
-  public static ArrayList<TestEntry> subTestArray = new ArrayList<TestEntry>();
+  private ArrayList<TestEntry> subTestArray = new ArrayList<TestEntry>();
   public static TestEntry parentTestEntry;
 
   public TECore() {
